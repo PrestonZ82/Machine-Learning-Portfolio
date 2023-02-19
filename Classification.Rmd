@@ -1,0 +1,172 @@
+---
+title: "Classification"
+output: html_notebook
+---
+## By: Preston Zacha
+## Last Updated 2/18/23
+### Data set from Kaggle, [here](https://www.kaggle.com/datasets/gpiosenka/100-bird-species)
+
+### How does Linear models for classification work?
+
+---
+Linear models for classification use logistic regression. In order for this kind of model
+to work, the target type must be qualitative. Once you have your target the model will
+then try to find a boundary between in the data to setup classes. This is known as the decision 
+boundary. Then after finding this boundary it can make predictions on test data.
+---
+
+```{r}
+#Reduces birds dataframe to more manageable size
+birds = birds[-(1:75000),]
+birds = subset(birds, select = -c(filepaths, data.set))
+#splits birds into train and test dataframes
+set.seed(2)
+
+sampleClassification <- sample(c(TRUE, FALSE), nrow(birds), replace =TRUE, prob = c(0.8, 0.2))
+trainClassification <- birds[sampleClassification, ]
+testClassification <- birds[!sampleClassification, ]
+```
+
+### Using R functions for data exploration on train dataframe
+
+```{r}
+nrow(trainClassification)
+ncol(trainClassification)
+colSums(is.na(trainClassification))
+summary(trainClassification)
+head(trainClassification)
+```
+
+### Creating Two informative graphs
+
+```{r}
+#From this graph we can see that by far the most common type of bird in this set has a class id between 450-500
+hist(trainClassification$class.id, xlab = "class id", main = "Frequency of Class IDs")
+#From this graph we can see which birds have what labels, and since we know the most common id for the birds, we can conclude the most common type of bird
+plot(trainClassification$class.id~factor(trainClassification$labels), trainClassification, las=2, xlab="", ylab = "class id", main="Labels of class IDs")
+
+```
+
+### Building logistic regression model and outputting summary
+
+---
+This is a logistic regression model used for classification. When looking at the
+null deviance, we see that the value is very high. We would like to see a much smaller
+null deviance value. This is because a small null deviance value can represent that
+the model is good. So most likely our dataframe using logistic regression has a bad fit.
+That being said our residual deviance is very small and that is a good sign for the model.
+---
+
+```{r}
+glm1 <- glm(class.id ~ labels, data = trainClassification)
+summary(glm1)
+```
+
+### Building naive Bayes model and outputting summary.
+
+---
+This is a naive Bayes model used on the train set for the birds data frame.
+This model has a big summary since there are so many observations in the data
+frame. We can see that as the class ids go up the probability for them go up as well.
+This is very accurate when compared to the graph we used earlier for data visualization.
+It also does the probabilities for the scientific names of the birds but this harder
+to understand since R studio omits the bottom of the output. This is a problem 
+because the majority of the observations hold values that would be at the bottom
+of this output.
+---
+
+```{r}
+library(e1071)
+nb1 <- naiveBayes(class.id~., data = trainClassification)
+nb1
+```
+
+### Predicting test dataframe using naive bayes and logistical models
+
+---
+After completing the naive Bayes and logistic regression models on our training 
+data now we will predict and evaluate them on our testing data. 
+We can see that when we use our logistic repression model for predicting we get an
+accuracy of 0.0014 but that seems to be wrong. When we look at the actual probabilities
+it provides they seem to line up with our birds data. That being the majority of the birds
+are between class ids 450-500. I am not sure why our accuracy is so low, yet our predictions 
+seem to be right.
+Now looking at the predictions of the naive Bayes model it seems that our model is way off.
+The predictions don't seem to correlate with our actual data when comparing. I 
+believe the reason for this is because that the predictors are dependent of one another.
+This would explain why the naive Bayes model is very inaccurate with this data set.
+Also, the data set is large so that may be why logistic regression outperformed naive bayes.
+---
+
+---
+predicting with logistic regression model
+---
+
+```{r}
+probsClassification <- predict(glm1, newdata = testClassification, type = "response")
+predLogisticClassification <- ifelse(probsClassification > 0.5, 1, 0)
+acc <- mean(predLogisticClassification == testClassification$class.id)
+print(paste("Accuracy: ", acc))
+table(predLogisticClassification, testClassification$class.id)
+```
+
+
+---
+Predicting with naive bayes model
+---
+
+```{r}
+predClassification <- predict(nb1, newdata = testClassification, type = "class")
+table(predClassification, testClassification$class.id)
+mean(predClassification == testClassification$class.id)
+
+predClassification_raw <- predict(nb1, newdata = testClassification, type = "raw")
+head(predClassification_raw)
+```
+
+### Strength and Weaknessse of Naive Bayes and Logistic Regression
+
+---
+Naive Bayes is a very fast algorithm since it assumes all predictors are independent.
+It also works very well on smaller data frames. Also, after running the algorithm 
+it is very easy to interpret the output. However, a major flaw to the naive Bayes
+model is that the model may be very inaccurate if the predictors are dependent.
+The logistic regression is pretty simple to implement and interpret. Also, logistic
+regression is compatible with multinational regression. Also, if the data frame is not
+high dimensional it will be very hard to accidentally over fit the model. However, there
+are so drawbacks to logistic regression. Such as logistic regression is prone to
+over fitting on high dimensional data frames. Also, it can be slower than naive Bayes model. 
+Lastly, the model is linear and can not construct models that are based off of non linear 
+problems.
+---
+
+### Benefits and drawbacks of classification metrics
+
+---
+The most important classification metrics are accuracy, sensitivity and specificity,
+kappa, ROC curves and AUC, and MCC.
+Accuracy is the most common and simplest metric, however it is very useful in 
+describing how well the model has done. Next, sensitivity and specificity are both used 
+to measure the true positive and true negative rates, receptivity. Next, kappa
+is used to adjust the accuracy value in order to make up for accidentally correct
+predictions. ROC and AUC is a curve on a graph which represents the true to false 
+positive rates on the model. This ranges from 0 to 1. Lastly, MCC ranges from -1 to 1
+and is used when there is differences in the class distribution in the model. This 
+provides a more accurate accuracy, since accuracy does not account for this.
+Accuracy: pro, gives you general accuracy. Con, could be wrong if there are major
+differences in the class distribution.
+Sensitivity and specificity: Pro, gives accurate true positive and negative rates.
+Con, these are based off on assumptions.
+Kappa: Pro, gives a more realistic accuracy after accounting for accidentally true
+predictions. Con, Kappa is heavily influenced by trait prevalence.
+ROC and AUC: Pro, gives a very nice graph on true positives and negatives. Con, 
+has the same faults as sensitivity and specificity.
+MCC: Pro, Can give a more accurate accuracy after accounting for difference in class
+distribution. Con, may give inaccurate value if there is little difference in class 
+distribution.
+
+---
+
+
+
+

@@ -1,0 +1,195 @@
+---
+title: "Regression"
+output: html_notebook
+---
+## By: Preston Zacha
+## Last Updated 2/18/23
+### Data set from Kaggle [here](https://www.kaggle.com/datasets/neuromusic/avocado-prices)
+
+### What is Linear Regression?
+
+---
+linear regression is a machine learning algorithm which given a dataframe, trys to find
+correlation between the provided predictors and targets. Some strengths of linear regression
+is it is simple to understand and implement. This is very good for people who are knew to 
+machine learning. Also, the model can be easily be adjusted by using regularization 
+to fix any overfitting problems that arise. Some downsides are that it is possible to
+have confounding variables. Also, there may be hidden variables effecting the correlation.
+---
+
+### Breaks Data into an 80/20 train/test.
+```{r}
+set.seed(1)
+
+sample <- sample(c(TRUE, FALSE), nrow(avocado), replace =TRUE, prob = c(0.8, 0.2))
+train <- avocado[sample, ]
+test <- avocado[!sample, ]
+#removes first row from train so we have cleaner data
+train = train[-1,]
+#changes test and train columns from char to num so we can use them later
+test$V3 = as.numeric(as.character(test$V3))
+test$V8 = as.numeric(as.character(test$V8))
+test$V9 = as.numeric(as.character(test$V9))
+test$V10 = as.numeric(as.character(test$V10))
+train$V3 = as.numeric(as.character(train$V3))
+train$V9 = as.numeric(as.character(train$V9))
+train$V8 = as.numeric(as.character(train$V8))
+train$V10 = as.numeric(as.character(train$V10))
+```
+### Performs 5 functions on the training data for data exploration.
+```{r}
+nrow(train)
+ncol(train)
+colSums(is.na(train))
+summary(train)
+head(train)
+```
+
+### Creates two graphs from the data set showing possible relation
+
+```{r}
+#From this graph it appears as the quantity goes down the avg price goes up
+plot(train$V4, train$V3, xlab = "Quantity", ylab = "Average Price")
+#from this graph it appears as the quantity goes up, the number of bags goes up
+plot(train$V4, train$V8, xlab = "Quantity", ylab = "Total Bags")
+```
+
+### Creates a linear regression model and outputs summary.
+
+---
+Created a linear model with the train data. When looking at then summary of our linear model
+we see that our multiple r squared value is 0.03 which is extremely low and shows that we 
+have a low correlation. Our adjusted R-squared value is about the same at 0.029, we would want
+that to be closer to 1. Our RSE looks good. We also have a low p-value which indicates a good
+model. 
+---
+```{r}
+lm1 <- lm(V3 ~ V9, data = train)
+summary(lm1)
+```
+
+### Plot of the residuals from the linear model.
+
+---
+We created a fitted residual plot, where the residuals are the y axis, and the learning
+model is the x-axis. From this it does not seem like fitting the model skews the statistic
+so no changes need to be made to it. Also, I see no parabola or pattern in this 
+plot. However, there is a slight linear pattern in it. Overall, its good with a
+mediocre graph and our values from the summary appear to show that we have a 
+good model.
+---
+
+```{r}
+res <- resid(lm1)
+plot(fitted(lm1), res, xlab = "Linear Model", ylab = "Residuals")
+```
+
+### Creates a multiple linear regression model, outputs summary and plots it.
+
+---
+Looking at our summary of our multiple linear model we see that our multiple R-sqaured
+value is 0.03, which is extremely low and shows a very low amount of correlation.
+Also, our Adjusted R-squared is 0.03, which is horrible and I would like to see it 
+closer to 1. Our RSE appears to be good. However, we do have a low p-value which is good.
+Now looking at our fitted residual plot, fitting the data does not seem to skew the model,
+there is no need to alter the model because of this. The plot is hard to read but I do 
+see a slight negative linear pattern in the middle of the plot.
+---
+
+```{r}
+lm2 <- lm(V3 ~ V8 + V10, data = train)
+summary(lm2)
+res2 <- resid(lm2)
+plot(fitted(lm2), res2, xlab = "Linear Model", ylab = "Residuals")
+```
+
+### Creates another linear regression model, outputs summary and plots it.
+
+---
+We have created a much better linear model according to our summary. Our Multiple R - Squared
+and Adjusted R-Squared are both 0.989. I believe this is the almost best value possible and shows that
+there is extremely high correlation in our linear model. Also, our p-value is very low, which is a
+very good indication of a linear model. However, it would appear that our RSE is may be too high.
+For our plot, there appears to be some problem with the fitting of the linear model. 
+I also do not see a clear pattern in our graph.
+---
+
+```{r}
+lm3 <- lm(V9 ~ V8, data = train)
+summary(lm3)
+res3 <- resid(lm3)
+plot(fitted(lm3), res3, xlab = "Linear Model", ylab = "Residuals")
+```
+
+### Which model is best?
+
+---
+Our first model was a simple linear regression model, it had a very bad multiple r-squared value, 
+but it had a very good p value. The p-value would indicate the model is good, but the r-value 
+shows little correlation. The Adjusted r-squared value was low and the graph was not the best. 
+Our second model was a multiple linear regression model and also had very bad multiple r-squared value. 
+However, like the first the adjusted r-squared value was too low, also this model had a small p value which is
+indicating of a good linear model. Lastly, the plot was good, and had a linear pattern to it.
+While all the models had some positives and negatives, I believe the best model was my third model.
+Like the first it was a simple linear regression model, however it had a different predictor. Both the
+multiple r-squared value and adjusted r-squared value were 0.0989. This is the almost
+best case scenario for a model. Also, the p value was very small, indicating a good model.
+Lastly, the plot did not seem to have any issues when fitting the model.
+---
+
+
+### Predicting our test data using all models
+
+---
+After using all three models to predict and evaluate the test data using metrics
+correlation and mse as well as msre. I believe the best model is the simple linear
+regression model three. Three seems to have the best results from the linear models.
+I believe this is because linear model three, had values for multiple r-squared and adjusted
+r-squared values closest to one. Also, the p-value for this model is very small indicating a good model.
+---
+
+---
+Learning model 1 for prediction
+---
+
+```{r}
+pred <- predict(lm1, newdata = test)
+correlation <- cor.test(pred, test$V3)
+print(paste("correlation: ", correlation))
+mse <- mean((pred - test$V3)^2)
+print(paste("MSE: ", mse))
+rmse <- sqrt(mse)
+print(paste("RMSE: ", rmse))
+```
+
+---
+Learning model 2 for predicton
+---
+
+```{r}
+pred <- predict(lm2, newdata = test)
+correlation <- cor.test(pred, test$V3)
+print(paste("correlation: ", correlation))
+mse <- mean((pred - test$V3)^2)
+print(paste("MSE: ", mse))
+rmse <- sqrt(mse)
+print(paste("RMSE: ", rmse))
+```
+
+---
+Learning model 3 for prediction
+---
+
+```{r}
+pred <- predict(lm3, newdata = test)
+correlation <- cor.test(pred, test$V9)
+print(paste("correlation: ", correlation))
+mse <- mean((pred - test$V9)^2)
+print(paste("MSE: ", mse))
+rmse <- sqrt(mse)
+print(paste("RMSE: ", rmse))
+```
+
+
+
+
