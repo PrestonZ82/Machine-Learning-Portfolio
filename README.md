@@ -14,3 +14,12 @@ of these statiscal values and how they can be used.
 You can see the pdf [here](Data_Exploration_Output_and_Write_Up.pdf).
 You can see the code [here](Data_Exploration.cpp).
 
+## Using linear models in R
+I found large data sets on the internet. Took them in, performed minor data cleaning. The created three linear regression models. Then I took in another data set
+performed same cleaning. Then built a logistic regression model and a naive bayes model. Then discussed in depth the process and information of these models.
+
+You can see the Linear regression code [here](Regression.Rmd)
+You can see the pdf for the linear code [here](Regression.nb.html)
+You can see the Logistic and Bayes code [here](Classification.Rmd)
+You can see the pdf for the linear code [here](Regression.nb.html)
+
