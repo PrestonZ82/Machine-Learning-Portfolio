@@ -21,5 +21,6 @@ performed same cleaning. Then built a logistic regression model and a naive baye
 You can see the Linear regression code [here](Regression.Rmd)
 You can see the pdf for the linear code [here](Regression.nb.html)
 You can see the Logistic and Bayes code [here](Classification.Rmd)
-You can see the pdf for the linear code [here](Regression.nb.html)
+For some reason the PDF for Logistic and Bayes will not update. I am not sure what the problem is. If you look at the source
+code it is different than what the pdf prints out.
 
