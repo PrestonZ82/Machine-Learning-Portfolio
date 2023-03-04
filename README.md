@@ -24,3 +24,6 @@ You can see the Logistic and Bayes code [here](Classification.Rmd)
 For some reason the PDF for Logistic and Bayes will not update. I am not sure what the problem is. If you look at the source
 code it is different than what the pdf prints out.
 
+## C++ Algorithms from Scratch
+A partner and I constructed a logistic regression model and a Naive Bayes model from scratch in C++. My partner did the logistic regression and I did the Naive Bayes model.
+You can see our writeout about the algorithms [here](
