@@ -26,4 +26,7 @@ code it is different than what the pdf prints out.
 
 ## C++ Algorithms from Scratch
 A partner and I constructed a logistic regression model and a Naive Bayes model from scratch in C++. My partner did the logistic regression and I did the Naive Bayes model.
-You can see our writeout about the algorithms [here](
+You can see our writeout about the algorithms [here](ML_Algorithms_from_Scratch.pdf)
+You can see the logistic regression code [here](Logistic_Regression.cpp)
+You can see the Naive Bayes model code [here](NaibeBayesFromScratch.cpp)
+
