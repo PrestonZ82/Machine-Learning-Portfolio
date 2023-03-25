@@ -30,3 +30,10 @@ You can see our writeout about the algorithms [here](ML_Algorithms_from_Scratch.
 You can see the logistic regression code [here](Logistic_Regression.cpp)
 You can see the Naive Bayes model code [here](NaibeBayesFromScratch.cpp)
 
+## Similarity and Ensemlbe
+A group of 5 us completed multiple machine learning objectives.
+The first person completed linear regression, knn regression, and decision tree regression. You can see their work [here](Similarity.pdf)
+The second person completed logisitc regression, knn regression, and decision tree regression for a classification data set. You can see their work [here](Avinluan_Program4Part2.pdf)
+The third person completed kmeans clustering, heirarchical clustering, and model based clustering. You can see their work [here](Clustering.pdf)
+The fourth person completed PCA and LDA on a data set. You can see their work [here](Dimensionality_Reduction.pdf)
+The fifth person(me) managed the project and wrote a report on kNN, decision trees, clustering methods, PCA, LDA for both classification and regression when applicable. You can see my work [here](ML_Narrative_Document.pdf)
