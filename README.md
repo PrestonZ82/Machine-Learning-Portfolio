@@ -32,6 +32,8 @@ You can see the Naive Bayes model code [here](NaibeBayesFromScratch.cpp)
 
 ## Similarity and Ensemlbe
 A group of 5 us completed multiple machine learning objectives.
+
+## Used sklearn in python to try and read in a data set and do logistic regression, decision tree, and neural network. I had trouble completing some of it. You can view the notebook [here](notebook.pdf)
 The first person completed linear regression, knn regression, and decision tree regression. You can see their work [here](Similarity.pdf)
 The second person completed logisitc regression, knn regression, and decision tree regression for a classification data set. You can see their work [here](AVinluan_Program4Part2.pdf)
 The third person completed kmeans clustering, heirarchical clustering, and model based clustering. You can see their work [here](Clustering.pdf)
