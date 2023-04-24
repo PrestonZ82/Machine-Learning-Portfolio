@@ -40,3 +40,6 @@ The fourth person completed PCA and LDA on a data set. You can see their work [h
 The fifth person(me) managed the project and wrote a report on kNN, decision trees, clustering methods, PCA, LDA for both classification and regression when applicable. You can see my work [here](ML_Narrative_Document.pdf)
 ## sklearn in Python
 Used sklearn in python to try and read in a data set and do logistic regression, decision tree, and neural network. I had trouble completing some of it. You can view the notebook [here](notebook.pdf)
+
+## Image Classification
+This assigment was to take an image dataset from kaggle and perform multiple image classifcaiton models on it. I attempted to do a sequtinal model, then include CNN and RNN in seperate tests. Lastly, I tried using a pretrained model. I used the intel image classficaitoon model from Kaggle. You can find the notebook [here](ImageClassification.ipynb) and you can find the analysis [here](MachineLearningImageClassificationAnalysis.pdf)
