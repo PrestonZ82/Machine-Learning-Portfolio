@@ -43,3 +43,6 @@ Used sklearn in python to try and read in a data set and do logistic regression,
 
 ## Image Classification
 This assigment was to take an image dataset from kaggle and perform multiple image classifcaiton models on it. I attempted to do a sequtinal model, then include CNN and RNN in seperate tests. Lastly, I tried using a pretrained model. I used the intel image classficaitoon model from Kaggle. You can find the notebook [here](ImageClassification.ipynb) and you can find the analysis [here](MachineLearningImageClassificationAnalysis.pdf)
+
+## Wrapping Up The Portfolio
+
