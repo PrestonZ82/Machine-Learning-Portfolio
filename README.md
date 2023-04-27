@@ -45,8 +45,5 @@ Used sklearn in python to try and read in a data set and do logistic regression,
 This assignment was to take an image dataset from kaggle and perform multiple image classificaiton models on it. I attempted to do a sequential model, then include CNN and RNN in separate tests. Lastly, I tried using a pretrained model. I used the intel image classificaiton model from Kaggle. You can find the notebook [here](ImageClassification.ipynb) and you can find the analysis [here](MachineLearningImageClassificationAnalysis.pdf)
 
 ## Wrapping Up The Portfolio
-Add a summary paragraph to the index page that reflects your skills in ML, enthusiasm for ML,
-plans for future personal projects, plans for keeping up with this rapidly changing field, and
-interest in possible employment opportunities. 
 
 Over the course of this semester I gained a lot of knowledge on machine learning and how to implement machine learning models. I have an understanding of many machine learning models and techniques such as linear regression, knn regression, CNN, and Naive Bayes Models. I am still very interested in ML, even though I spent an entire semester learning about it. There is still so much more to learn about. I currently don't have any plans for new personal projects, but I do plan on revisiting a lot of the projects in this portfolio and improving upon them. I plan to keep reading about updates in machine learning and AI in order to try to keep up with this fast paced environment. I will be graduating in August, therefore I have been and will continue to apply for as many ML jobs as possible.
